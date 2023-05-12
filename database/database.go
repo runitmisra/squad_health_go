@@ -19,7 +19,7 @@ type DbInstance struct {
 var DB DbInstance
 
 func ConnectDb() {
-	dsn := fmt.Sprintf("host=squad_health_go_db_1 user=%s password=%s dbname=%s port=5432 sslmode=disable TimeZone=Asia/Kolkata", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"))
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=5432 sslmode=disable TimeZone=Asia/Kolkata", os.Getenv("DB_HOST"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"))
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})
@@ -29,7 +29,7 @@ func ConnectDb() {
 	}
 
 	log.Println("connected")
-	db.Logger = logger.Default.LogMode(logger.Info)
+	db.Logger = logger.Default.LogMode(logger.Error)
 
 	log.Println("Running Migrations")
 	db.AutoMigrate(&models.User{})

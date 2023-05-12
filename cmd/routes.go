@@ -9,4 +9,6 @@ import (
 func setupRoutes(app *fiber.App) {
 	app.Get("/users", handlers.ListUsers)
 	app.Post("/user", handlers.CreateUser)
+	app.Get("/teams", handlers.ListTeams)
+	app.Post("/team", handlers.CreateTeam)
 }

@@ -11,7 +11,7 @@ func ListUsers(c *fiber.Ctx) error {
 	facts := []models.User{}
 	database.DB.Db.Find(&facts)
 
-	return c.Status(200).JSON(facts)
+	return c.Status(fiber.StatusOK).JSON(facts)
 }
 
 func CreateUser(c *fiber.Ctx) error {
@@ -25,5 +25,26 @@ func CreateUser(c *fiber.Ctx) error {
 
 	database.DB.Db.Create(&fact)
 
-	return c.Status(200).JSON(fact)
+	return c.Status(fiber.StatusOK).JSON(fact)
+}
+
+func ListTeams(c *fiber.Ctx) error {
+	facts := []models.Team{}
+	database.DB.Db.Find(&facts)
+
+	return c.Status(fiber.StatusOK).JSON(facts)
+}
+
+func CreateTeam(c *fiber.Ctx) error {
+	fact := new(models.Team)
+	err := c.BodyParser(fact)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+		})
+	}
+
+	database.DB.Db.Create(&fact)
+
+	return c.Status(fiber.StatusOK).JSON(fact)
 }
